@@ -13,11 +13,7 @@ def check_bounds():
     elif head >= len(tape):
         tape.append(blank)
 
-def run_tm(table):
-    tape = list("_0000_")
-    head = 1
-    blank = ""
-    state = "q0"
+def run_tm(table, tape, head, blank, state):
     while state not in ("q_accept", "q_reject"):
          check_bounds()
          
@@ -44,8 +40,12 @@ transitions = {
     ("q0", "1"): ("q0", "1", "R"),
     ("q0", "_"): ("q1", "_", "L"),
 
-    ("q1", "0"): ("q0", "1", "N"),
+    ("q1", "0"): ("q_accept", "1", "N"),
     ("q1", "1"): ("q1", "0", "L"),
 }
 
-run_tm(transitions)
+tape = list("_0000_")
+head = 1
+blank = "_"
+state = "q0"
+run_tm(transitions, tape, head, blank, state)
